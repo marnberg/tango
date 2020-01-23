@@ -1,16 +1,21 @@
 name: tango
 description: flutter configuration tool.
 version: 1.0.0
-# homepage: https://www.example.com
+homepage: https://github.com/marnberg/tango
 
 environment:
   sdk: '>=2.7.0 <3.0.0'
 
 dependencies:
-  #https://pub.dev/packages/image
+  # https://pub.dev/packages/image
   image: ^2.1.12
 
 dev_dependencies:
+  # https://pub.dev/packages/pedantic
   pedantic: ^1.9.0
+
+  # https://pub.dev/packages/test
   test: ^1.6.0
+
+  # https://pub.dev/packages/mockito
   mockito: ^4.1.1

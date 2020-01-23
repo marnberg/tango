@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'config_model.dart';
 import 'copy_files.dart';
+import 'scale_images.dart';
 
 Future handleConfigs(
   String source,
@@ -26,6 +27,8 @@ Future handleConfigs(
   }
 
   await copyFiles(source, destination, config);
+  await scaleImages(source, destination, config);
+
 
   return;
 }

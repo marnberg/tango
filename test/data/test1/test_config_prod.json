@@ -1,0 +1,5 @@
+{
+    "copied": {
+        "lib/file1.dart":"lib/foobar.dart"
+    }
+}

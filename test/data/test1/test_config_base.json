@@ -1,0 +1,19 @@
+{
+    "copied": {
+        "lib/constants.dart":"files/file1.dart",
+        "lib/theme.dart":"files/file2.dart"
+    },
+    "scaledImages": {
+        "assets/test.jpg":"images/test1.png"
+    },
+    "iosConfig": {
+        "launchImage": "images/test1.png",
+        "iconImage": "images/test1.png"
+    },
+    "androidConfig": {
+        "launchImage": "images/test1.png",
+        "iconImage": "images/test1.png",
+        "notificationImage": "images/test1.png"
+    }
+
+}

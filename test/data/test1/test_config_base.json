@@ -4,16 +4,16 @@
         "lib/theme.dart":"files/file2.dart"
     },
     "scaledImages": {
-        "assets/test.jpg":"images/test1.png"
+        "assets/test.jpg":"images/tango2.png"
     },
     "iosConfig": {
-        "launchImage": "images/test1.png",
-        "iconImage": "images/test1.png"
+        "launchImage": "images/tango2.png",
+        "iconImage": "images/tango1.png"
     },
     "androidConfig": {
-        "launchImage": "images/test1.png",
-        "iconImage": "images/test1.png",
-        "notificationImage": "images/test1.png"
+        "launchImage": "images/tango2.png",
+        "iconImage": "images/tango1.png",
+        "notificationImage": "images/tango2.png"
     }
 
 }

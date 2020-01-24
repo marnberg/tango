@@ -33,12 +33,16 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 import 'dart:io';
 import 'package:tango/tango.dart' as tango;
 import 'package:args/args.dart';
+import 'package:yaml/yaml.dart';
 
 const sourceDirecory = 'source';
 const sourceDirecoryAbbr = 's';
 
 const destinationDirecory = 'destination';
 const destinationDirecoryAbbr = 'd';
+
+const version = 'version';
+const versionAbbr = 'v';
 
 ArgResults argResults;
 
@@ -49,9 +53,20 @@ void main(List<String> arguments) {
     ..addOption(
       destinationDirecory,
       abbr: destinationDirecoryAbbr,
-    );
+    )
+    ..addFlag(version, abbr: versionAbbr);
   argResults = parser.parse(arguments);
+  if (argResults[version] == true) {
+    final yamlFile = File('pubspec.yaml');
+    yamlFile.readAsString().then((String text) {
+      Map yaml = loadYaml(text);
+      print(yaml['version']);
+    });
+    return;
+  }
+
   final configFiles = argResults.rest;
 
-  tango.handleConfigs(argResults[sourceDirecory], argResults[destinationDirecory], configFiles);
+  tango.handleConfigs(
+      argResults[sourceDirecory], argResults[destinationDirecory], configFiles);
 }

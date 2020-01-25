@@ -100,8 +100,12 @@ class TangoConfig {
       this.scalesMap = _defaultScales});
 
   TangoConfig.fromJson(Map json)
-      : copied = Map<String, String>.from(json['copied']),
-        scaledImages = Map<String, String>.from(json['scaledImages']),
+      : copied = json['copied'] != null
+            ? Map<String, String>.from(json['copied'])
+            : null,
+        scaledImages = json['scaledImages'] != null
+            ? Map<String, String>.from(json['scaledImages'])
+            : null,
         scalesMap = json['imageScales'] != null
             ? Map<String, double>.from(json['imageScales'])
             : _defaultScales,
@@ -114,8 +118,10 @@ class TangoConfig {
 
   TangoConfig merge(TangoConfig config) {
     return TangoConfig(
-        copied: {...copied, ...config.copied},
-        scaledImages: {...scaledImages, ...config.scaledImages},
+        copied: config.copied != null ? {...copied, ...config.copied} : copied,
+        scaledImages: config.scaledImages != null
+            ? {...scaledImages, ...config.scaledImages}
+            : scaledImages,
         iosConfig:
             config.iosConfig?.merge(config.iosConfig) ?? config.iosConfig,
         androidConfig: config.androidConfig?.merge(config.androidConfig) ??

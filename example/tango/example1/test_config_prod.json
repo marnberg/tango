@@ -1,0 +1,8 @@
+{
+    "iosConfig": {
+        "iconImage": "images/tango2.png"
+    },
+    "androidConfig": {
+        "iconImage": "images/tango2.png"
+    }
+}

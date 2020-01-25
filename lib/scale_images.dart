@@ -60,7 +60,7 @@ class TangoImageUtils {
     }
   }
 
-  Image resize(Image image, int width, int height) {
+  Image resize(Image image, {int width, int height}) {
     return copyResize(image, width: width, height: height);
   }
 }
@@ -70,7 +70,7 @@ Future scaleImages(String source, String destination, TangoConfig config,
   for (final fileEntry in config.scaledImages.entries) {
     final image = imageUtils.readImage('$source/${fileEntry.value}');
 
-    final baseOutput = '$destination${fileEntry.key}';
+    final baseOutput = '$destination/${fileEntry.key}';
 
     print('Scaling $source/${fileEntry.key} => $baseOutput');
     for (final scale in config.scalesMap.entries) {

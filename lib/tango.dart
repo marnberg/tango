@@ -44,7 +44,6 @@ Future handleConfigs(
   List<String> configFiles,
 ) async {
   final outputDir = await Directory(destination);
-  outputDir.deleteSync(recursive: true);
   outputDir.createSync(recursive: true);
 
   var config = TangoConfig();
@@ -63,6 +62,6 @@ Future handleConfigs(
   await scaleImages(source, destination, config);
   await createIosAssets(source, destination, config);
   await createAndroidAssets(source, destination, config);
-  
+
   return;
 }

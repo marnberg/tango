@@ -42,6 +42,7 @@ import 'package:tango/scale_images.dart';
 import 'io_mock.dart';
 
 class MockTangoImageUtils extends Mock implements TangoImageUtils {}
+
 class MockImage extends Mock implements Image {}
 
 void main() {
@@ -53,7 +54,8 @@ void main() {
       final image = MockImage();
 
       when(imagaeUtils.readImage(any)).thenAnswer((_) => image);
-      when(imagaeUtils.resize(any, any, any)).thenAnswer((_) => image);
+      when(imagaeUtils.resize(any, width: any, height: any))
+          .thenAnswer((_) => image);
 
       when(image.width).thenAnswer((_) => 100);
       when(image.height).thenAnswer((_) => 100);

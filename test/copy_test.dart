@@ -6,9 +6,7 @@ import 'package:test/test.dart';
 import 'package:tango/config_model.dart';
 import 'package:tango/copy_files.dart';
 
-class MockDirectory extends Mock implements Directory {}
-
-class MockFile extends Mock implements File {}
+import 'io_mock.dart';
 
 void main() {
   group('File Copy', () {

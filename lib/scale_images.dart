@@ -34,22 +34,45 @@ import 'dart:io';
 import 'package:image/image.dart';
 import 'config_model.dart';
 
-Future scaleImages(
-  String source,
-  String destination,
-  TangoConfig config,
-) async {
-  for (final fileEntry in config.scaledImages.entries) {
-    final imageFile = File('$source/${fileEntry.value}').readAsBytesSync();
-    final i = fileEntry.key.lastIndexOf('.');
-    final type = fileEntry.key.substring(i + 1);
+class TangoImageUtils {
+  const TangoImageUtils();
 
-    final image = decodeImage(imageFile);
+  Image readImage(String path) {
+    final imageFile = File(path).readAsBytesSync();
+    return decodeImage(imageFile);
+  }
+
+  void writeImage(Image image, String toPath) {
+    final i = toPath.lastIndexOf('.');
+    final type = toPath.substring(i + 1);
+    switch (type) {
+      case 'jpg':
+      case 'jpeg':
+        File(toPath).writeAsBytesSync(encodeJpg(image));
+        break;
+      case 'png':
+        File(toPath).writeAsBytesSync(encodePng(image));
+        break;
+      default:
+        exitCode = 1;
+        stderr.writeln('unsupported image file');
+        return;
+    }
+  }
+
+  Image resize(Image image, int width, int height) {
+    return copyResize(image, width: width, height: height);
+  }
+}
+
+Future scaleImages(String source, String destination, TangoConfig config,
+    {imageUtils = const TangoImageUtils()}) async {
+  for (final fileEntry in config.scaledImages.entries) {
+    final image = imageUtils.readImage('$source/${fileEntry.value}');
 
     final baseOutput = '$destination${fileEntry.key}';
 
     print('Scaling $source/${fileEntry.key} => $baseOutput');
-
     for (final scale in config.scalesMap.entries) {
       final dirIndex = baseOutput.lastIndexOf('/');
       final dirPath = baseOutput.substring(0, dirIndex) + scale.key;
@@ -59,24 +82,12 @@ Future scaleImages(
         dir.createSync(recursive: true);
       }
 
-      final resized = copyResize(image,
+      final resized = imageUtils.resize(image,
           width: (image.width * scale.value).toInt(),
           height: (image.height * scale.value).toInt());
 
       final destName = '$dirPath$fileName';
-      switch (type) {
-        case 'jpg':
-        case 'jpeg':
-          File(destName).writeAsBytesSync(encodeJpg(resized));
-          break;
-        case 'png':
-          File(destName).writeAsBytesSync(encodePng(resized));
-          break;
-        default:
-          exitCode = 1;
-          stderr.writeln('unsupported image file');
-          return;
-      }
+      imageUtils.writeImage(resized, destName);
     }
   }
 }

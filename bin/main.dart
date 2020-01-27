@@ -35,6 +35,9 @@ import 'package:tango/tango.dart' as tango;
 import 'package:args/args.dart';
 import 'package:yaml/yaml.dart';
 
+const tangoFile = 'tangofile';
+const tangoFileAbbr = 't';
+
 const sourceDirecory = 'source';
 const sourceDirecoryAbbr = 's';
 
@@ -46,9 +49,10 @@ const versionAbbr = 'v';
 
 ArgResults argResults;
 
-void main(List<String> arguments) {
+void main(List<String> arguments) async {
   exitCode = 0; // presume success
   final parser = ArgParser()
+    ..addOption(tangoFile, abbr: tangoFileAbbr)
     ..addOption(sourceDirecory, abbr: sourceDirecoryAbbr)
     ..addOption(
       destinationDirecory,
@@ -58,15 +62,36 @@ void main(List<String> arguments) {
   argResults = parser.parse(arguments);
   if (argResults[version] == true) {
     final yamlFile = File('pubspec.yaml');
-    yamlFile.readAsString().then((String text) {
-      Map yaml = loadYaml(text);
-      print(yaml['version']);
-    });
+    final text = await yamlFile.readAsString();
+    Map yaml = loadYaml(text);
+    print(yaml['version']);
     return;
   }
 
-  final configFiles = argResults.rest;
+  if (argResults[sourceDirecory] == null) {
+    final tangoYaml = File(argResults[tangoFile] ?? 'tango.yaml');
+    final text = await tangoYaml.readAsString();
+    Map yaml = loadYaml(text);
+    final target = argResults.rest;
+    if (target.length != 1) {
+      exitCode = -1;
+      return;
+    }
+    final config = yaml[target.first];
+    if (config['source'] == null || config['config'] == null) {
+      exitCode = -1;
+      return;
+    }
+    final source = config['source'] as String;
+    final destination =
+        config['destination'] != null ? config['destination'] as String : null;
+    final configFiles =
+        (config['config'] as YamlList).map((i) => i as String).toList();
 
-  tango.handleConfigs(
-      argResults[sourceDirecory], argResults[destinationDirecory], configFiles);
+    await tango.handleConfigs(source, destination ?? '.', configFiles);
+  } else {
+    final configFiles = argResults.rest;
+    await tango.handleConfigs(argResults[sourceDirecory],
+        argResults[destinationDirecory] ?? '.', configFiles);
+  }
 }

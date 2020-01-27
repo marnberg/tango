@@ -1,0 +1,17 @@
+
+
+blue:
+  source: tango/blue
+  config:
+    - base.json
+
+red:
+  source: tango/red
+  config:
+    - base.json
+
+red_production:
+  source: tango/red
+  config:
+    - base.json
+    - prod.json

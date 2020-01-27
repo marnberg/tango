@@ -61,6 +61,7 @@ Future handleConfigs(
   await copyFiles(source, destination, config);
   await scaleImages(source, destination, config);
   await createIosAssets(source, destination, config);
+  await createMacAssets(source, destination, config);
   await createAndroidAssets(source, destination, config);
 
   return;

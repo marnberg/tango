@@ -60,6 +60,16 @@ const _iOSAppIconSizes = {
   'Icon-App-1024x1024@1x.png': 1024,
 };
 
+const _macAppIconSizes = {
+  'app_icon_16.png': 16,
+  'app_icon_32.png': 32,
+  'app_icon_64.png': 64,
+  'app_icon_128.png': 128,
+  'app_icon_256.png': 256,
+  'app_icon_512.png': 512,
+  'app_icon_1024.png': 1024,
+};
+
 const _androidIconSizes = {
   'mdpi': 48,
   'hdpi': 72,
@@ -127,6 +137,35 @@ Future createIosAssets(
       final iosIconImage = decodeImage(iosIconImageFile);
 
       for (final size in _iOSAppIconSizes.entries) {
+        final resized = copyResize(iosIconImage,
+            width: (size.value).toInt(), height: (size.value).toInt());
+        File('$destPath/${size.key}').writeAsBytesSync(encodePng(resized));
+      }
+    }
+  }
+}
+
+Future createMacAssets(
+  String source,
+  String destination,
+  TangoConfig config,
+) async {
+  if (config.macConfig != null) {
+    print('Creating Mac Assets');
+    if (config.macConfig.iconImage != null) {
+      print(' - App Icons');
+      final destPath =
+          '$destination/macos/Runner/Assets.xcassets/AppIcon.appiconset';
+      final dir = await Directory(destPath);
+      if (!dir.existsSync()) {
+        dir.createSync(recursive: true);
+      }
+
+      final macIconImageFile =
+          File('$source/${config.macConfig.iconImage}').readAsBytesSync();
+      final iosIconImage = decodeImage(macIconImageFile);
+
+      for (final size in _macAppIconSizes.entries) {
         final resized = copyResize(iosIconImage,
             width: (size.value).toInt(), height: (size.value).toInt());
         File('$destPath/${size.key}').writeAsBytesSync(encodePng(resized));

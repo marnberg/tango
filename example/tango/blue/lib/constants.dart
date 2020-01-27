@@ -5,4 +5,6 @@ class AppConstants implements RequiredConstants {
   ThemeData get theme => ThemeData(
         primarySwatch: Colors.blue,
       );
+
+  String get title => 'Tango Blue';
 }

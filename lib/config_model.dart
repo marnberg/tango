@@ -38,19 +38,17 @@ const Map<String, double> _defaultScales = {
 };
 
 class PlatformConfig {
-  final String launchImage;
   final String iconImage;
 
-  PlatformConfig({this.iconImage, this.launchImage});
+  PlatformConfig({this.iconImage});
 
-  PlatformConfig.fromJson(Map json)
-      : launchImage = json['launchImage'],
-        iconImage = json['iconImage'];
+  PlatformConfig.fromJson(Map json) : iconImage = json['iconImage'];
 }
 
 class IosConfig extends PlatformConfig {
-  IosConfig({String iconImage, String launchImage})
-      : super(iconImage: iconImage, launchImage: launchImage);
+  final String launchImage;
+
+  IosConfig({String iconImage, this.launchImage}) : super(iconImage: iconImage);
 
   factory IosConfig.fromJson(Map json) => IosConfig(
         iconImage: json['iconImage'],
@@ -65,10 +63,26 @@ class IosConfig extends PlatformConfig {
   }
 }
 
+class MacConfig extends PlatformConfig {
+  MacConfig({String iconImage}) : super(iconImage: iconImage);
+
+  factory MacConfig.fromJson(Map json) => MacConfig(
+        iconImage: json['iconImage'],
+      );
+
+  IosConfig merge(IosConfig config) {
+    return IosConfig(
+      iconImage: config.iconImage ?? iconImage,
+    );
+  }
+}
+
 class AndroidConfig extends PlatformConfig {
+  final String launchImage;
+
   final String notificationImage;
-  AndroidConfig({String iconImage, String launchImage, this.notificationImage})
-      : super(iconImage: iconImage, launchImage: launchImage);
+  AndroidConfig({String iconImage, this.launchImage, this.notificationImage})
+      : super(iconImage: iconImage);
 
   factory AndroidConfig.fromJson(Map json) => AndroidConfig(
       iconImage: json['iconImage'],
@@ -90,12 +104,15 @@ class TangoConfig {
   final Map<String, double> scalesMap;
 
   final IosConfig iosConfig;
+  final IosConfig macConfig;
+
   final AndroidConfig androidConfig;
 
   TangoConfig(
       {this.copied = const {},
       this.scaledImages = const {},
       this.iosConfig,
+      this.macConfig,
       this.androidConfig,
       this.scalesMap = _defaultScales});
 
@@ -112,6 +129,9 @@ class TangoConfig {
         iosConfig = json['iosConfig'] != null
             ? IosConfig.fromJson(json['iosConfig'])
             : null,
+        macConfig = json['macConfig'] != null
+            ? IosConfig.fromJson(json['macConfig'])
+            : null,
         androidConfig = json['androidConfig'] != null
             ? AndroidConfig.fromJson(json['androidConfig'])
             : null;
@@ -124,6 +144,8 @@ class TangoConfig {
             : scaledImages,
         iosConfig:
             config.iosConfig?.merge(config.iosConfig) ?? config.iosConfig,
+        macConfig:
+            config.macConfig?.merge(config.macConfig) ?? config.macConfig,
         androidConfig: config.androidConfig?.merge(config.androidConfig) ??
             config.androidConfig);
   }

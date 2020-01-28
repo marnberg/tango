@@ -1,5 +1,5 @@
 # Tango
-Tango is a flexible build configuration tool that is the perfect partner for your Flutter project. Setup different build variants like paid/free or development/production. Tango handles copying of files, scaling images for different screen resolutions. It makes it super easy to swap out app icons for different build or provide different provisioning files for various distributions.
+Tango is a flexible build configuration tool that is the perfect partner for your Flutter project. Setup different build variants like paid/free or development/production. Tango handles copying of files, scaling images for different screen resolutions. It makes it super easy to swap out app icons for different builds or provide different provisioning files for various distributions.
 
 Tango is 100% written in Dart and should be easy to extend for your needs.
 
@@ -21,7 +21,7 @@ flutter run
 
 ## Getting Started
 
-In your flutter project create json configuration file that tango operate on. The current features are
+In your flutter project create a json configuration file that tango operate on. The current features are:
 
 Copy and Scale:
 * copied - Map of destination location to source location. Path relative to source and destination folder
@@ -39,7 +39,7 @@ Platform assets: (Path to image relative to source folder)
   * iconImage
 
 ### Example
-For organizational purposes it is helpful to place your tango variants into a subfolder in you flutter project.
+For organizational purposes it is helpful to place your tango variants into a subfolder in your flutter project.
 
 ```
 Flutter_Project
@@ -96,7 +96,7 @@ There are many ways you can setup your project to take advantage of tango. For e
 
 ## Add Tango Yaml
 
-To simplyfy the command line tango can take a yaml file as imput to point it to the source and config files.
+To simplify the command line tango can take a yaml file as input to point it to the source and config files.
 Take a look at the example. Now the build variants can be setup in the tango.yaml file and the input is the build variant. 
 
 ```

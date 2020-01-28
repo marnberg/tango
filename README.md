@@ -7,6 +7,20 @@ Tango is 100% written in Dart and should be easy to extend for your needs.
 
 pub global activate tango
 
+## Quick Start
+This creates and runs a new Flutter project with some example build configurations.
+* Requires Flutter and Tango installed
+
+Get quick start folder from https://github.com/marnberg/tango/quick_start
+
+```
+flutter create tango_quick_start
+cd tango_quick_start
+cp -R path_to_tango_quick_start/* .
+tango quick
+flutter run
+```
+
 ## Getting Started
 
 In your flutter project create json configuration file that tango operate on. The current features are
@@ -69,7 +83,7 @@ Flutter_Project
 ```
 
 
-##Usage
+## Usage
 
 In your flutter project
 ```
@@ -82,3 +96,12 @@ There are many ways you can setup your project to take advantage of tango. For e
 >tango -s ./variants/chistmas_theme base_app.json paid_app prod_options.json
 ```
 
+## Add Tango Yaml
+
+To simplyfy the command line tango can take a yaml file as imput to point it to the source and config files.
+Take a look at the example. Now the build variants can be setup in the tango.yaml file and the input is the build variant. 
+
+```
+>tango free_app
+>tango paid_app
+```

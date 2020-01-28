@@ -1,0 +1,7 @@
+
+
+quick:
+  source: tango/quick
+  config:
+    - base.json
+

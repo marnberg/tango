@@ -1,0 +1,17 @@
+{
+    "copied": {
+        "lib/constants.dart": "lib/constants.dart"
+    },
+    "scaledImages": {
+        "assets/test.jpg": "images/tango.png"
+    },
+    "iosConfig": {
+        "launchImage": "images/tango.png",
+        "iconImage": "images/tango.png"
+    },
+    "androidConfig": {
+        "launchImage": "images/tango.png",
+        "iconImage": "images/tango.png",
+        "notificationImage": "images/tango.png"
+    }
+}

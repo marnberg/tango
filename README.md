@@ -14,7 +14,7 @@ This creates and runs a new Flutter project with example build configurations.
 ```
 flutter create tango_quick_start
 cd tango_quick_start
-tango -initialize
+tango --quickstart
 tango quick
 flutter run
 ```

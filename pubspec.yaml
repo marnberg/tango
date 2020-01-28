@@ -2,6 +2,8 @@ name: tango
 description: flutter build configuration tool.
 version: 0.1.0
 homepage: https://github.com/marnberg/tango
+executables:
+  tango:
 
 environment:
   sdk: '>=2.7.0 <3.0.0'

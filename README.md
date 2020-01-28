@@ -17,13 +17,13 @@ The basic values in the configuration file are:
 
 Icon and launch image configurations:
 * iosConfig
-⋅⋅* iconImage
-⋅⋅* launchImage
+  * iconImage
+  * launchImage
 * androidConfig
-⋅⋅* iconImage
-⋅⋅* launchImage
+  * iconImage
+  * launchImage
 * macConfig
-⋅⋅* iconImage
+  * iconImage
 
 
 ##Usage

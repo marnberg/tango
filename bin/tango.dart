@@ -47,11 +47,18 @@ const destinationDirecoryAbbr = 'd';
 const version = 'version';
 const versionAbbr = 'v';
 
+const force = 'force';
+const forceAbbr = 'f';
+
 ArgResults argResults;
+
+const _flutterProjectError =
+    'Destination folder does not look like a flutter project.';
 
 void main(List<String> arguments) async {
   exitCode = 0; // presume success
   final parser = ArgParser()
+    ..addFlag(force, abbr: forceAbbr)
     ..addOption(tangoFile, abbr: tangoFileAbbr)
     ..addOption(sourceDirecory, abbr: sourceDirecoryAbbr)
     ..addOption(
@@ -68,6 +75,10 @@ void main(List<String> arguments) async {
     return;
   }
 
+  String source;
+  String destination;
+  List<String> configFiles;
+
   if (argResults[sourceDirecory] == null) {
     final tangoYaml = File(argResults[tangoFile] ?? 'tango.yaml');
     final text = await tangoYaml.readAsString();
@@ -82,16 +93,26 @@ void main(List<String> arguments) async {
       exitCode = -1;
       return;
     }
-    final source = config['source'] as String;
-    final destination =
+    source = config['source'] as String;
+    destination =
         config['destination'] != null ? config['destination'] as String : null;
-    final configFiles =
+    configFiles =
         (config['config'] as YamlList).map((i) => i as String).toList();
-
-    await tango.handleConfigs(source, destination ?? '.', configFiles);
   } else {
-    final configFiles = argResults.rest;
-    await tango.handleConfigs(argResults[sourceDirecory],
-        argResults[destinationDirecory] ?? '.', configFiles);
+    source = argResults[sourceDirecory];
+    configFiles = argResults.rest;
+    destination = argResults[destinationDirecory];
   }
+
+  if (!(argResults[force] as bool) && !(await Directory('$destination/.dart_tool/flutter_build')
+      .existsSync())) {
+    _printError(_flutterProjectError);
+    return;
+  }
+  await tango.handleConfigs(source, destination ?? '.', configFiles);
+}
+
+void _printError(String error) {
+  exitCode = -1;
+  stderr.writeln(error);
 }

@@ -1,7 +1,7 @@
 # Tango
-Tango is a flexable build configuration tool that is the perfect partner for your Flutter project. Setup different build variants like paid/free or development/production. Tango handles copying of files, scaling images for diffrent screen resolutions. It makes it super easy to swap out app icons for different build or provide diffrent provisioning files for diffrent distributions.
+Tango is a flexible build configuration tool that is the perfect partner for your Flutter project. Setup different build variants like paid/free or development/production. Tango handles copying of files, scaling images for different screen resolutions. It makes it super easy to swap out app icons for different build or provide different provisioning files for various distributions.
 
-Tango is 100% written in Dart and should be easy to extend for your needs 
+Tango is 100% written in Dart and should be easy to extend for your needs.
 
 ## Install
 
@@ -9,21 +9,64 @@ pub global activate tango
 
 ## Getting Started
 
-In your flutter project create tango json configuration file.
+In your flutter project create json configuration file that tango operate on. The current features are
 
-The basic values in the configuration file are:
-* copied - Map of desitination location to source location
-* scaledImages - Map of desitination location to source location, supported formats 'png, jpeg'
+Copy and Scale:
+* copied - Map of destination location to source location
+* scaledImages - Map of destination location to source location, supported 
 
-Icon and launch image configurations:
+Platform assets:
 * iosConfig
-  * iconImage
+  * iconImage - 
   * launchImage
 * androidConfig
   * iconImage
   * launchImage
+  * notificationImage
 * macConfig
   * iconImage
+
+### Example
+For organizational purposes it is helpful to place your tango variants into a subfolder in you flutter project.
+
+```
+Flutter_Project
+ -tango
+  -MyApp
+   -images
+    my_app_image.png
+   -lib
+    my_app_constants.dart
+   -my_app.json
+  -YourApp
+   -images
+    your_app_image.png
+   -lib
+    your_app_constants.dart
+   -your_app.json
+```
+
+
+```javascript
+{
+    "copied": {
+        "lib/constants.dart":"files/file1.dart",
+        "lib/theme.dart":"files/file2.dart"
+    },
+    "scaledImages": {
+        "assets/logo.jpg":"images/tango.png"
+    },
+    "iosConfig": {
+        "launchImage": "images/tango_launch.png",
+        "iconImage": "images/tango_icon.png"
+    },
+    "androidConfig": {
+        "launchImage": "images/tango_launch.png",
+        "iconImage": "images/tango_icon.png",
+        "notificationImage": "images/tango_notification.png"
+    }
+}
+```
 
 
 ##Usage

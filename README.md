@@ -11,7 +11,7 @@ pub global activate tango
 This creates and runs a new Flutter project with some example build configurations.
 * Requires Flutter and Tango installed
 
-Get quick start folder from https://github.com/marnberg/tango/quick_start
+Get quick start folder from https://github.com/marnberg/tango/tree/master/quick_start
 
 ```
 flutter create tango_quick_start

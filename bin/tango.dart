@@ -31,9 +31,12 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 import 'dart:io';
+import 'package:tango/quick_start.dart';
 import 'package:tango/tango.dart' as tango;
 import 'package:args/args.dart';
 import 'package:yaml/yaml.dart';
+
+const quickstart = 'quickstart';
 
 const tangoFile = 'tangofile';
 const tangoFileAbbr = 't';
@@ -43,9 +46,6 @@ const sourceDirecoryAbbr = 's';
 
 const destinationDirecory = 'destination';
 const destinationDirecoryAbbr = 'd';
-
-const version = 'version';
-const versionAbbr = 'v';
 
 const force = 'force';
 const forceAbbr = 'f';
@@ -65,13 +65,13 @@ void main(List<String> arguments) async {
       destinationDirecory,
       abbr: destinationDirecoryAbbr,
     )
-    ..addFlag(version, abbr: versionAbbr);
+    ..addFlag(quickstart);
+
   argResults = parser.parse(arguments);
-  if (argResults[version] == true) {
-    final yamlFile = File('pubspec.yaml');
-    final text = await yamlFile.readAsString();
-    Map yaml = loadYaml(text);
-    print(yaml['version']);
+  if (argResults[quickstart]) {
+    quick_start(
+        destination: argResults[destinationDirecory] ?? '.',
+        force: argResults[force]);
     return;
   }
 
@@ -95,21 +95,20 @@ void main(List<String> arguments) async {
     }
     source = config['source'] as String;
     destination =
-        config['destination'] != null ? config['destination'] as String : null;
+        config['destination'] != null ? config['destination'] as String : '.';
     configFiles =
         (config['config'] as YamlList).map((i) => i as String).toList();
   } else {
     source = argResults[sourceDirecory];
     configFiles = argResults.rest;
-    destination = argResults[destinationDirecory];
+    destination = argResults[destinationDirecory] ?? '.';
   }
 
-  if (!(argResults[force] as bool) && !(await Directory('$destination/.dart_tool/flutter_build')
-      .existsSync())) {
+  if (!(argResults[force] as bool) && !(await File('$destination/pubspec.yaml').existsSync())) {
     _printError(_flutterProjectError);
     return;
   }
-  await tango.handleConfigs(source, destination ?? '.', configFiles);
+  await tango.handleConfigs(source, destination, configFiles);
 }
 
 void _printError(String error) {

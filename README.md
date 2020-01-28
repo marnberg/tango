@@ -8,15 +8,13 @@ Tango is 100% written in Dart and should be easy to extend for your needs.
 pub global activate tango
 
 ## Quick Start
-This creates and runs a new Flutter project with some example build configurations.
+This creates and runs a new Flutter project with example build configurations.
 * Requires Flutter and Tango installed
-
-Get quick start folder from https://github.com/marnberg/tango/tree/master/quick_start
 
 ```
 flutter create tango_quick_start
 cd tango_quick_start
-cp -R path_to_tango_quick_start/* .
+tango -initialize
 tango quick
 flutter run
 ```
@@ -26,12 +24,12 @@ flutter run
 In your flutter project create json configuration file that tango operate on. The current features are
 
 Copy and Scale:
-* copied - Map of destination location to source location
-* scaledImages - Map of destination location to source location, supported 
+* copied - Map of destination location to source location. Path relative to source and destination folder
+* scaledImages - Map of destination location to source location. Path relative to source and destination folder
 
-Platform assets:
+Platform assets: (Path to image relative to source folder) 
 * iosConfig
-  * iconImage - 
+  * iconImage 
   * launchImage
 * androidConfig
   * iconImage

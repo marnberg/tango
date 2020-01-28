@@ -1,6 +1,6 @@
 name: tango
 description: Tango is a flexible build configuration tool that is the perfect partner for your Flutter project. Setup different build variants like paid/free or development/production. Tango handles copying of files, scaling images for different screen resolutions. 
-version: 0.1.1
+version: 0.1.2
 homepage: https://github.com/marnberg/tango
 executables:
   tango:
